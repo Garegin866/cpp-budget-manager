@@ -1,1 +1,1 @@
-# cpp-budget-manager
+# Budget Manager (C++20)
