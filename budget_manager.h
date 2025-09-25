@@ -1,18 +1,25 @@
 #pragma once
-
 #include "date.h"
+#include <vector>
 
-#include <unordered_map>
+using namespace std::literals;
 
 class BudgetManager {
 public:
-    static const Date START_DATE;
-    static const Date END_DATE;
+    BudgetManager();
 
-    void Earn(const Date& from, const Date& to, double value);
-    void PayTax(const Date& from, const Date& to);
-    [[nodiscard]] double ComputeIncome(const Date& from, const Date& to) const;
+    void Earn(const Date& from, const Date& to, double amount);
+    void Spend(const Date& from, const Date& to, double amount);
+    void PayTax(const Date& from, const Date& to, int rate_percent);
+    double ComputeIncome(const Date& from, const Date& to) const;
 
 private:
-    std::unordered_map<int, double> income_;
+    static const Date epoch_;         // "2000-01-01"
+    static const Date end_exclusive_; // "2100-01-01"
+    int total_days_ = 0;
+
+    std::vector<double> income_per_day_;
+    std::vector<double> expense_per_day_;
+
+    static int DayIndex(const Date& d) { return Date::ComputeDistance(epoch_, d); }
 };

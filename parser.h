@@ -3,13 +3,14 @@
 #include "date.h"
 
 namespace parser {
-    enum class Command { Earn, PayTax, ComputeIncome };
+    enum class Command { Earn, PayTax, Spend, ComputeIncome };
 
     struct ParsedQuery {
         Command cmd;
         Date from;
         Date to;
-        std::optional<double> value;
+        std::optional<double> amount; // Earn/Spend
+        std::optional<int> rate;      // PayTax
     };
 
     ParsedQuery ParseQueryLine(std::string_view line);
